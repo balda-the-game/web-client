@@ -39,7 +39,7 @@
                 >{{ failedLoginLabel }}</label
               >
               <button
-                class="button is-info"
+                class="button is-success"
                 @click.prevent="logIn"
                 @keypress.enter="logIn"
               >

@@ -63,7 +63,7 @@
               </div>
 
               <button
-                class="button is-info"
+                class="button is-success"
                 @click.prevent="register"
                 @keyup.enter="register"
               >

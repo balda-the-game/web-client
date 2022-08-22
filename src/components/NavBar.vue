@@ -35,7 +35,7 @@
         <div class="navbar-item">
           <div class="buttons">
             <router-link to="/register" class="navbar-item">
-              <a class="button is-primary">
+              <a class="button is-success">
                 <strong>Sign up</strong>
               </a>
             </router-link>
