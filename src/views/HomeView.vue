@@ -36,7 +36,9 @@
       </div>
       <div class="message is-small">
         <div class="message-header">Q: How many players?</div>
-        <div class="message-body">A: In this implementation 2 to 6.</div>
+        <div class="message-body">
+          A: In this implementation currently from 2 to 4.
+        </div>
       </div>
       <div class="message is-small">
         <div class="message-header">Q: How to play it?</div>
@@ -45,11 +47,16 @@
           private room.
         </div>
       </div>
+      <h5 class="is-5">Read more about rules
+        <router-link to="/rules">
+          <a> here </a>
+        </router-link>
+      </h5>
     </section>
 
     <div class="hero is-primary">
       <div class="hero-body">
-        <div class="container columns">
+        <div class="columns">
           <div class="column">
             <div class="notification is-success">
               <div class="title">
@@ -84,35 +91,19 @@
         </div>
       </div>
     </div>
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <strong>Balda</strong> by
-        <a href="https://wvovaw.github.io/">
-          wvovaw
-          <i class="fa-solid fa-globe"></i>
-        </a>
-        <br />The
-        <a href="https://github.com/balda-the-game/">
-          source code
-          <i class="fa-brands fa-github"></i>
-        </a>
-        is licensed
-        <a href="http://opensource.org/licenses/mit-license.php"
-          ><strong>MIT</strong></a
-        >
-      </div>
-    </footer>
   </div>
+  <FooterComp />
 </template>
 
 <script>
+import FooterComp from "@/components/FooterComp.vue";
 export default {
   name: "HomeView",
-  components: {},
+  components: { FooterComp },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // *:not(path):not(g) {
 //   color: hsla(210, 100%, 100%, 0.9) !important;
 //   background: hsla(210, 100%, 50%, 0.5) !important;

@@ -26,8 +26,8 @@
 
     <div id="menu-items" :class="navbarMenuClass">
       <div class="navbar-start">
-        <router-link to="/about" class="navbar-item">
-          <a class="navbar-item"> About </a>
+        <router-link to="/rules" class="navbar-item">
+          <a class="navbar-item"> Rules </a>
         </router-link>
       </div>
 

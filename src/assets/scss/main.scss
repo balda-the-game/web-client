@@ -1,9 +1,12 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+
 @import "../css/normalize.css";
 
 @import "../scss/gruvbox.scss";
-
 // Overriding default colors with gruvbox colorscheme dark mode dark
 $black:        $gb-dm-bg0-hard;
 $black-bis:    $gb-dm-bg0;
@@ -41,7 +44,8 @@ $background: $white-ter;
 
 
 // Update Bulma’s global variables
-// $family-sans-serif: “Nunito”, sans-serif;
+// $family-sans-serif: "Titillium Web";
+$family-sans-serif: "Roboto Slab";
 // $widescreen-enabled: false;
 // $fullhd-enabled: false;
 
