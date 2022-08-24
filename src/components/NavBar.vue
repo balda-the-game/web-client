@@ -34,13 +34,17 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link to="/register" class="navbar-item">
-              <a class="button is-success">
-                <strong>Sign up</strong>
-              </a>
+            <router-link
+              to="/register"
+              class="navbar-item button is-success is-small"
+            >
+              <strong>Sign up</strong>
             </router-link>
-            <router-link to="/login" class="navbar-item">
-              <a class="button is-light"> Log in </a>
+            <router-link
+              to="/login"
+              class="navbar-item button is-light is-small"
+            >
+              log in
             </router-link>
           </div>
         </div>
@@ -71,4 +75,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.navbar * {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 </style>
