@@ -7,7 +7,7 @@
             <form action="" class="box">
               <div class="field">
                 <label class="label is-aligned-left">Username</label>
-                <div class="control has-icon-left">
+                <div class="control has-icons-left">
                   <input
                     class="input"
                     :class="{ 'is-danger': failedLogin }"
@@ -16,12 +16,15 @@
                     required
                     v-model="usernameInput"
                   />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Password</label>
-                <div class="control has-icon-left">
+                <div class="control has-icons-left">
                   <input
                     class="input"
                     :class="{ 'is-danger': failedLogin }"
@@ -30,6 +33,9 @@
                     required
                     v-model="passInput"
                   />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                  </span>
                 </div>
               </div>
 

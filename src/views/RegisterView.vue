@@ -7,7 +7,7 @@
             <form class="box">
               <div class="field">
                 <label class="label is-aligned-left">Username</label>
-                <div class="control has-icon-left">
+                <div class="control has-icons-left">
                   <input
                     class="input"
                     :class="{ 'is-danger': usernameHasError }"
@@ -16,6 +16,9 @@
                     required
                     v-model="usernameInput"
                   />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
                 </div>
                 <label
                   class="label is-small"
@@ -26,7 +29,7 @@
 
               <div class="field">
                 <label class="label">Pass</label>
-                <div class="control has-icon-left">
+                <div class="control has-icons-left">
                   <input
                     class="input"
                     :class="{ 'is-danger': passHasError }"
@@ -35,6 +38,9 @@
                     required
                     v-model="passInput"
                   />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                  </span>
                 </div>
                 <label
                   class="label is-small"
@@ -45,7 +51,7 @@
 
               <div class="field">
                 <label class="label">Confirm password</label>
-                <div class="control has-icon-left">
+                <div class="control has-icons-left">
                   <input
                     class="input"
                     :class="{ 'is-danger': passConfirmHasError }"
@@ -54,6 +60,9 @@
                     required
                     v-model="passConfirmInput"
                   />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                  </span>
                 </div>
                 <label
                   class="label is-small"
