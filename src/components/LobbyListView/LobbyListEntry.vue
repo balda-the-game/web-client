@@ -1,10 +1,5 @@
 <template>
   <tr class="entry">
-    <td class="lobby-id">
-      <div style="display: flex; align-items: center;">
-      1488
-      </div>
-      </td>
     <td>
       <div class="title-wrapper">
         <!-- TODO: Ticker for overflow !-->
@@ -20,12 +15,18 @@
       </span>
     </td>
     <td class="right-field">
-      <div class="field has-addons is-justify-content-flex-end is-align-items-center">
+      <div
+        class="
+          field
+          has-addons
+          is-justify-content-flex-end is-align-items-center
+        "
+      >
         <i class="fas fa-lock is-large"></i>
         <div class="control">
           <input
             type="password"
-            class="input is-small has-addons "
+            class="input is-small has-addons"
             placeholder="********"
           />
         </div>

@@ -67,14 +67,17 @@
       </div>
     </div>
   </div>
+  <CreateLobbyModal />
 </template>
 <script>
 import LobbyListControls from "@/components/LobbyListView/LobbyListControls.vue";
 import LobbyListEntry from "@/components/LobbyListView/LobbyListEntry.vue";
+import CreateLobbyModal from "@/components/LobbyListView/CreateLobbyModal.vue";
+
 export default {
   name: "LobbyList",
   props: "",
-  components: { LobbyListControls, LobbyListEntry },
+  components: { LobbyListControls, LobbyListEntry, CreateLobbyModal },
 };
 </script>
 
@@ -92,7 +95,6 @@ table {
     width: 15px;
   }
   &::-webkit-scrollbar-track {
-    background: $turquoise;
     border-radius: 100px;
   }
   &::-webkit-scrollbar-thumb {

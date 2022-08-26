@@ -63,7 +63,7 @@ input {
   max-width: 10rem;
 }
 @media only screen and (max-width: 769px) {
-  .level-item {
+  .level-item:not(:last-child) {
     margin-bottom: 12px !important;
   }
 }
