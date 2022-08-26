@@ -21,14 +21,14 @@
                   </span>
                 </div>
                 <label
-                  class="label is-small"
+                  class="help is-danger"
                   :class="{ 'is-hidden': !usernameHasError }"
                   >{{ usernameErrorLabel }}</label
                 >
               </div>
 
               <div class="field">
-                <label class="label">Pass</label>
+                <label class="label">Password</label>
                 <div class="control has-icons-left">
                   <input
                     class="input"
@@ -43,7 +43,7 @@
                   </span>
                 </div>
                 <label
-                  class="label is-small"
+                  class="help is-danger"
                   :class="{ 'is-hidden': !passHasError }"
                   >{{ passErrorLabel }}</label
                 >
@@ -65,7 +65,7 @@
                   </span>
                 </div>
                 <label
-                  class="label is-small"
+                  class="help is-danger"
                   :class="{ 'is-hidden': !passConfirmHasError }"
                   >{{ passConfirmErrorLabel }}</label
                 >
@@ -104,10 +104,10 @@ export default {
   },
   methods: {
     async register() {
-      /* TODO:
-        [x] is-danger if field is empty
-        [x] password field is-warning if password lenght is less than 8
-        [x] password and confirm field is danger if password fields doesn't match
+      /*
+        [X] is-danger if field is empty
+        [X] password field is-warning if password lenght is less than 8
+        [X] password and confirm field is danger if password fields doesn't match
         [ ] is-danger if register attempt failed if username exists 
       */
       if (!/^[^\W\d][\d\w]{2,16}$/g.test(this.usernameInput)) {

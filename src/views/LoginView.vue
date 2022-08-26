@@ -37,13 +37,13 @@
                     <i class="fas fa-key"></i>
                   </span>
                 </div>
+                <label
+                  class="help is-danger"
+                  :class="{ 'is-hidden': !failedLogin }"
+                  >{{ failedLoginLabel }}</label
+                >
               </div>
 
-              <label
-                class="label is-small"
-                :class="{ 'is-hidden': !failedLogin }"
-                >{{ failedLoginLabel }}</label
-              >
               <button
                 class="button is-success"
                 @click.prevent="logIn"
@@ -73,8 +73,8 @@ export default {
   },
   methods: {
     async logIn() {
-      /* TODO:
-        [ ] is-danger if field is empty
+      /*
+        [X] is-danger if field is empty
         [ ] is-danger if login attempt failed
       */
       if (this.usernameInput.length < 2 || this.passInput < 8) {

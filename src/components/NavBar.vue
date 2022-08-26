@@ -27,27 +27,17 @@
     <div id="menu-items" :class="navbarMenuClass">
       <div class="navbar-start">
         <router-link to="/rules" class="navbar-item">
-          <a class="navbar-item"> Rules </a>
+          <a class="navbar-item py-3"> Rules </a>
         </router-link>
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <router-link
-              to="/register"
-              class="navbar-item button is-success is-small"
-            >
-              <strong>Sign up</strong>
-            </router-link>
-            <router-link
-              to="/login"
-              class="navbar-item button is-light is-small"
-            >
-              log in
-            </router-link>
-          </div>
-        </div>
+        <router-link to="/register" class="navbar-item">
+          <a class="navbar-item has-text-success is-small py-3"> Sign up </a>
+        </router-link>
+        <router-link to="/login" class="navbar-item">
+          <a class="navbar-item is-small py-3"> Log in </a>
+        </router-link>
       </div>
     </div>
   </nav>
