@@ -1,4 +1,5 @@
 <template>
+  <CreateLobbyModal />
   <div class="lobbies box hero is-fullheight-with-navbar is-primary">
     <div class="hero-body is-block p-0">
       <div class="container">
@@ -67,7 +68,6 @@
       </div>
     </div>
   </div>
-  <CreateLobbyModal />
 </template>
 <script>
 import LobbyListControls from "@/components/LobbyListView/LobbyListControls.vue";
@@ -75,7 +75,7 @@ import LobbyListEntry from "@/components/LobbyListView/LobbyListEntry.vue";
 import CreateLobbyModal from "@/components/LobbyListView/CreateLobbyModal.vue";
 
 export default {
-  name: "LobbyList",
+  name: "LobbyListView",
   props: "",
   components: { LobbyListControls, LobbyListEntry, CreateLobbyModal },
 };
@@ -87,6 +87,11 @@ table {
   table-layout: fixed;
 }
 .table-container {
+  @media only screen and (max-width: 769px) {
+    & {
+      max-height: 43vh;
+    }
+  }
   max-height: 65vh;
   overflow-y: scroll;
 

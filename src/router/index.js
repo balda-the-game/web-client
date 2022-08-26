@@ -25,6 +25,15 @@ const routes = [
     path: '/lobbies',
     name: 'lobbies',
     component: () => import(/* webpackChunkName: "lobbies" */ '../views/LobbyListView.vue')
+  },
+  {
+	path: '/404',
+	name: 'notFound',
+	component: () => import(/* webpackChunkName: "notFound" */ '../views/404.vue')
+  },
+  {
+	path: '/:catchAll(.*)',
+	redirect: '/404'
   }
 ]
 
