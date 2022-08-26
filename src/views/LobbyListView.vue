@@ -1,30 +1,30 @@
 <template>
   <div class="lobbies box hero is-fullheight-with-navbar is-primary">
-    <div class="hero-body">
+    <div class="hero-body is-block p-0">
       <div class="container">
         <LobbyListControls class="box" />
         <div class="columns">
-          <section class="column block">
-            <div class="table-container">
-            <table class="table is-fullwidth is-striped">
-              <tbody>
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-                <LobbyListEntry />
-              </tbody>
-            </table>
+          <section class="column block pr-0 mb-0">
+            <div class="table-container mb-3">
+              <table class="table is-fullwidth is-striped">
+                <tbody>
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                  <LobbyListEntry />
+                </tbody>
+              </table>
             </div>
             <nav
-              class="box pagination is-centered is-small is-link"
+              class="box pagination is-centered is-small is-link py-0 mr-3"
               role="navigation"
               aria-label="pagination"
             >
@@ -60,7 +60,7 @@
               </ul>
             </nav>
           </section>
-          <section class="column is-one-quarter">
+          <section class="column is-one-third pl-0 mb-0">
             <div class="box chat">Chat will be here</div>
           </section>
         </div>
@@ -79,32 +79,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// *:not(path):not(g) {
-//   color: hsla(210, 100%, 100%, 0.9) !important;
-//   background: hsla(210, 100%, 50%, 0.5) !important;
-//   outline: solid 0.25rem hsla(210, 100%, 100%, 0.5) !important;
-//   box-shadow: none !important;
-// }
-.column {
-  margin-bottom: 0;
-}
+@import "../assets/scss/colorscheme.scss";
 table {
   table-layout: fixed;
 }
 .table-container {
-  max-height: 61vh;
+  max-height: 65vh;
   overflow-y: scroll;
-}
-.hero {
-  display: block;
-}
-.hero-body {
-  display: none;
-  padding: 0;
-}
-.pagination {
-  padding-top: 1px;
-  padding-bottom: 1px;
+
+  &::-webkit-scrollbar {
+    margin-left: 10px;
+    width: 15px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $turquoise;
+    border-radius: 100px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $green;
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-clip: content-box;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $grey;
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-clip: content-box;
+  }
 }
 // TEMP PROPERTY
 .chat {

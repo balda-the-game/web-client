@@ -20,12 +20,12 @@
       </span>
     </td>
     <td class="right-field">
-      <div class="field has-addons">
+      <div class="field has-addons is-justify-content-flex-end is-align-items-center">
         <i class="fas fa-lock is-large"></i>
         <div class="control">
           <input
             type="password"
-            class="input is-small has-addons"
+            class="input is-small has-addons "
             placeholder="********"
           />
         </div>
@@ -52,9 +52,6 @@ export default {
 i {
   padding: 0 0.35rem;
 }
-.field.has-addons {
-  justify-content: flex-end;
-}
 .lobby-title {
   white-space: nowrap;
   text-overflow: show;
@@ -64,10 +61,6 @@ i {
 .lobby-id {
   width: 3rem;
   border-right: 1px solid gray;
-}
-.field.has-addons {
-  display: flex;
-  align-items: center;
 }
 </style>
 
