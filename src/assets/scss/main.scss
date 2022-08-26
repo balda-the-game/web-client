@@ -4,44 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
 
-@import "../css/normalize.css";
-
-@import "../scss/gruvbox.scss";
-// Overriding default colors with gruvbox colorscheme dark mode dark
-$black:        $gb-dm-bg0-hard;
-$black-bis:    $gb-dm-bg0;
-$black-ter:    $gb-dm-bg0-soft;
-
-$grey-darker:  $gb-dm-bg1;
-$grey-dark:    $gb-dm-bg2;
-$grey:         $gb-dm-bg3;
-$grey-light:   $gb-dm-bg4;
-$grey-lighter: $gb-dm-fg4;
-$grey-lightest:$gb-dm-fg3;
-
-$white-ter:    $gb-dm-fg2;
-$white-bis:    $gb-dm-fg1;
-$white:        $gb-dm-fg0;
-
-$orange:       $gb-dm-dark-orange;
-$yellow:       $gb-dm-dark-yellow;
-$green:        $gb-dm-dark-green;
-$turquoise:    $gb-dm-dark-aqua;
-$cyan:         $gb-dm-dark-gray;
-$blue:         $gb-dm-dark-blue;
-$purple:       $gb-dm-dark-purple;
-$red:          $gb-dm-dark-red;
-
-$text: $grey-dark;
-$background: $white-ter;
-// $primary: $turquoise;
-// $link: $blue;
-// $info: $cyan;
-// $success: $green;
-// $warning: $yellow;
-// $danger: $red;
-// $dark: $grey-darker;
-
+@import "colorscheme.scss";
 
 // Update Bulma’s global variables
 // $family-sans-serif: "Titillium Web";
