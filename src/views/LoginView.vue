@@ -4,53 +4,35 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-5-widescreen">
-            <form action="" class="box">
-              <div class="field">
-                <label class="label is-aligned-left">Username</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    :class="{ 'is-danger': failedLogin }"
-                    type="username"
-                    placeholder="username"
-                    required
-                    v-model="usernameInput"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    :class="{ 'is-danger': failedLogin }"
-                    type="password"
-                    placeholder="password"
-                    required
-                    v-model="passInput"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-key"></i>
-                  </span>
-                </div>
-                <label
-                  class="help is-danger"
-                  :class="{ 'is-hidden': !failedLogin }"
-                  >{{ failedLoginLabel }}</label
-                >
-              </div>
-
-              <button
-                class="button is-success"
-                @click.prevent="logIn"
-                @keypress.enter="logIn"
+            <form
+              @submit.prevent="submitForm"
+              @keyup.enter.prevent="submitForm"
+              class="box"
+            >
+              <WTextInput
+                type="email"
+                label="email"
+                placeholder="example@email.com"
+                icon-class="fas fa-at"
+                :invalid="emailValueErrorLabel != '' || failedLogin"
+								:errorLabel="emailValueErrorLabel"
+                v-model.trim="emailValue"
+              />
+              <WTextInput
+                type="password"
+                label="password"
+                placeholder="********"
+                icon-class="fas fa-key"
+                :invalid="passValueErrorLabel != '' || failedLogin"
+								:errorLabel="passValueErrorLabel"
+                v-model.trim="passValue"
+              />
+              <label
+                class="help is-danger"
+                :class="{ 'is-hidden': !failedLogin }"
+                >{{ failedLoginLabel }}</label
               >
-                Log in
-              </button>
+              <button type="submit" class="button is-success">Log in</button>
               <button class="button is-ghost">forgot password</button>
             </form>
           </div>
@@ -61,39 +43,54 @@
 </template>
 
 <script>
+import WTextInput from "@/components/Core/WTextInput.vue";
+import axios from "axios";
 export default {
   name: "LoginView",
+  components: { WTextInput },
   data() {
     return {
-      usernameInput: "",
-      passInput: "",
-      failedLogin: false,
+      emailValue: "",
+      passValue: "",
+			emailValueErrorLabel: "",
+			passValueErrorLabel: "",
+			failedLogin: false,
       failedLoginLabel: "",
     };
   },
   methods: {
-    async logIn() {
-      /*
-        [X] is-danger if field is empty
-        [ ] is-danger if login attempt failed
-      */
-      if (this.usernameInput.length < 2 || this.passInput < 8) {
-        this.failedLogin = true;
-        this.failedLoginLabel = "Fill all fields";
-        return;
-      } else {
-        this.failedLogin = false;
-        this.failedLoginLabel = "";
-      }
-      //const loginStatus = await tryLogIn(this.usernameInput, this.passInput);
-      const loginStatus = { status: 403, msg: "Wrong username or password" };
-      if (loginStatus.status == 403) {
-        this.failedLogin = true;
-        this.failedLoginLabel = loginStatus.msg;
-      } else {
-        this.failedLogin = false;
-        this.failedLoginLabel = "";
-        return;
+    formValidation() {
+			let valid = true
+      if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.emailValue)) {
+				this.emailValueErrorLabel = "Invalid email";
+				valid = false;
+			}
+			else {
+				this.emailValueErrorLabel = "";
+			}
+      if (!/^[\d\w\S]{8,}$/g.test(this.passValue)) {
+				this.passValueErrorLabel = "Invalid password";
+				valid = false;
+			}
+			else {
+				this.passValueErrorLabel = "";
+			}
+			return valid;
+		},
+    async submitForm() {
+			if (this.formValidation())
+      try {
+        const logRes = await axios.post("http://localhost:8080/token", {
+          email: this.emailValue,
+          password: this.passValue,
+        });
+        localStorage.setItem("token", logRes.data.token);
+        this.$router.push("/lobbies");
+      } catch (err) {
+        if (err.response.data == "Unauthorized") {
+					this.failedLogin = true;
+          this.failedLoginLabel = "Login failed. Wrong email or password";
+        }
       }
     },
   },

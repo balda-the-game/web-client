@@ -4,77 +4,46 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-5-widescreen">
-            <form class="box">
-              <div class="field">
-                <label class="label is-aligned-left">Username</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    :class="{ 'is-danger': usernameHasError }"
-                    type="username"
-                    placeholder="username"
-                    required
-                    v-model="usernameInput"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </div>
-                <label
-                  class="help is-danger"
-                  :class="{ 'is-hidden': !usernameHasError }"
-                  >{{ usernameErrorLabel }}</label
-                >
-              </div>
-
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    :class="{ 'is-danger': passHasError }"
-                    type="password"
-                    placeholder="password"
-                    required
-                    v-model="passInput"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-key"></i>
-                  </span>
-                </div>
-                <label
-                  class="help is-danger"
-                  :class="{ 'is-hidden': !passHasError }"
-                  >{{ passErrorLabel }}</label
-                >
-              </div>
-
-              <div class="field">
-                <label class="label">Confirm password</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    :class="{ 'is-danger': passConfirmHasError }"
-                    type="password"
-                    placeholder="password"
-                    required
-                    v-model="passConfirmInput"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-key"></i>
-                  </span>
-                </div>
-                <label
-                  class="help is-danger"
-                  :class="{ 'is-hidden': !passConfirmHasError }"
-                  >{{ passConfirmErrorLabel }}</label
-                >
-              </div>
-
+            <form @submit.prevent="submitForm" @keyup.enter.prevent="submitForm" class="box">
+              <WTextInput
+                type="username"
+                label="username"
+                placeholder="username"
+                icon-class="fas fa-user"
+                :error-label="usernameErrorLabel"
+                :invalid="usernameErrorLabel != ''"
+                v-model.trim="usernameValue"
+              />
+              <WTextInput
+                type="email"
+                label="email"
+                placeholder="example@email.com"
+                icon-class="fas fa-at"
+                :error-label="emailErrorLabel"
+                :invalid="emailErrorLabel != ''"
+                v-model.trim="emailValue"
+              />
+              <WTextInput
+                type="password"
+                label="password"
+                placeholder="********"
+                icon-class="fas fa-key"
+                :error-label="passErrorLabel"
+                :invalid="passErrorLabel != ''"
+                v-model.trim="passValue"
+              />
+              <WTextInput
+                type="password"
+                label="confirm password"
+                placeholder="********"
+                icon-class="fas fa-key"
+                :error-label="passConfirmErrorLabel"
+                :invalid="passConfirmErrorLabel != ''"
+                v-model.trim="passConfirmValue"
+              />
               <button
+                type="submit"
                 class="button is-success"
-                @click.prevent="register"
-                @keyup.enter="register"
               >
                 Register
               </button>
@@ -87,56 +56,80 @@
 </template>
 
 <script>
+import WTextInput from "@/components/Core/WTextInput.vue";
+import axios from "axios";
 export default {
   name: "RegisterView",
+  components: { WTextInput },
   data() {
     return {
-      usernameInput: "",
-      passInput: "",
-      passConfirmInput: "",
-      usernameHasError: false,
-      passHasError: false,
-      passConfirmHasError: false,
+      usernameValue: "",
+      emailValue: "",
+      passValue: "",
+      passConfirmValue: "",
       usernameErrorLabel: "",
+      emailErrorLabel: "",
       passErrorLabel: "",
       passConfirmErrorLabel: "",
     };
   },
   methods: {
-    async register() {
-      /*
-        [X] is-danger if field is empty
-        [X] password field is-warning if password lenght is less than 8
-        [X] password and confirm field is danger if password fields doesn't match
-        [ ] is-danger if register attempt failed if username exists 
-      */
-      if (!/^[^\W\d][\d\w]{2,16}$/g.test(this.usernameInput)) {
-        this.usernameHasError = true;
+    formValidation() {
+      let valid = true;
+      if (!/^[^\W\d][\d\w]{2,16}$/g.test(this.usernameValue)) {
         this.usernameErrorLabel = "Use letters and digits 2 to 16 length";
+        valid = false;
       } else {
-        this.usernameHasError = false;
         this.usernameErrorLabel = "";
       }
-      if (!/^[\d\w\S]{8,}$/g.test(this.passInput)) {
-        this.passHasError = true;
-        this.passErrorLabel = "Wrong pass pattern. 8 char length minimum";
+      if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.emailValue)) {
+        this.emailErrorLabel = "Please enter a valid email address";
+        valid = false;
       } else {
-        this.passHasError = false;
+        this.emailErrorLabel = "";
+      }
+      if (!/^[\d\w\S]{8,}$/g.test(this.passValue)) {
+        this.passErrorLabel = "Wrong pass pattern. 8 char length minimum";
+        valid = false;
+      } else {
         this.passErrorLabel = "";
       }
       if (
-        this.passInput != this.passConfirmInput ||
-        this.passConfirmInput.length == 0
+        this.passValue != this.passConfirmValue ||
+        this.passConfirmValue.length == 0
       ) {
-        this.passConfirmHasError = true;
         this.passConfirmErrorLabel = "Passwords doesn't match";
-        return;
+        valid = false;
       } else {
-        this.passConfirmHasError = false;
         this.passConfirmErrorLabel = "";
-        return;
       }
-      //await checkIfUsernameExists();
+      return valid;
+    },
+    async submitForm() {
+      if (this.formValidation())
+        try {
+          const regRes = await axios.post("http://localhost:8080/users", {
+            email: this.emailValue,
+            name: this.usernameValue,
+            password: this.passValue,
+          });
+          if (regRes.status == 200)
+            try {
+              const logRes = await axios.post("http://localhost:8080/token", {
+                email: this.emailValue,
+                password: this.passValue,
+              });
+              localStorage.setItem("token", logRes.data.token);
+              this.$router.push("/lobbies");
+            } catch (e) {
+              console.error("Login attempt failed.");
+            }
+        } catch (err) {
+          if (err.response.data.msg == "Validation error") {
+            this.emailIsInvalid = true;
+            this.emailErrorLabel = "Registration failed. Wrong email";
+          }
+        }
     },
   },
 };
