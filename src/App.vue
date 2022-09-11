@@ -23,5 +23,8 @@ import NavBar from "@/components/NavBar";
 
 export default {
   components: { NavBar },
+	beforeCreate() {
+		this.$store.commit("LOAD_STORE");
+	}
 };
 </script>
