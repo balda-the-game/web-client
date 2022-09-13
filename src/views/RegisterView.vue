@@ -108,18 +108,18 @@ export default {
     async submitForm() {
       if (this.formValidation())
         try {
-          const regRes = await axios.post("http://localhost:8080/users", {
+          const regRes = await axios.post("/users", {
             email: this.emailValue,
             name: this.usernameValue,
             password: this.passValue,
           });
           if (regRes.status == 200)
             try {
-              const logRes = await axios.post("http://localhost:8080/token", {
+              const logRes = await axios.post("/token", {
                 email: this.emailValue,
                 password: this.passValue,
               });
-              localStorage.setItem("token", logRes.data.token);
+							this.$store.dispatch("login", logRes.data.token)
               this.$router.push("/lobbies");
             } catch (e) {
               console.error("Login attempt failed.");

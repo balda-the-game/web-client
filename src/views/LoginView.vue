@@ -15,7 +15,7 @@
                 placeholder="example@email.com"
                 icon-class="fas fa-at"
                 :invalid="emailValueErrorLabel != '' || failedLogin"
-								:errorLabel="emailValueErrorLabel"
+                :errorLabel="emailValueErrorLabel"
                 v-model.trim="emailValue"
               />
               <WTextInput
@@ -24,7 +24,7 @@
                 placeholder="********"
                 icon-class="fas fa-key"
                 :invalid="passValueErrorLabel != '' || failedLogin"
-								:errorLabel="passValueErrorLabel"
+                :errorLabel="passValueErrorLabel"
                 v-model.trim="passValue"
               />
               <label
@@ -52,46 +52,44 @@ export default {
     return {
       emailValue: "",
       passValue: "",
-			emailValueErrorLabel: "",
-			passValueErrorLabel: "",
-			failedLogin: false,
+      emailValueErrorLabel: "",
+      passValueErrorLabel: "",
+      failedLogin: false,
       failedLoginLabel: "",
     };
   },
   methods: {
     formValidation() {
-			let valid = true
+      let valid = true;
       if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.emailValue)) {
-				this.emailValueErrorLabel = "Invalid email";
-				valid = false;
-			}
-			else {
-				this.emailValueErrorLabel = "";
-			}
-      if (!/^[\d\w\S]{8,}$/g.test(this.passValue)) {
-				this.passValueErrorLabel = "Invalid password";
-				valid = false;
-			}
-			else {
-				this.passValueErrorLabel = "";
-			}
-			return valid;
-		},
-    async submitForm() {
-			if (this.formValidation())
-      try {
-        const logRes = await axios.post("http://localhost:8080/token", {
-          email: this.emailValue,
-          password: this.passValue,
-        });
-        localStorage.setItem("token", logRes.data.token);
-        this.$router.push("/lobbies");
-      } catch (err) {
-        if (err.response.data == "Unauthorized") {
-					this.failedLogin = true;
-          this.failedLoginLabel = "Login failed. Wrong email or password";
-        }
+        this.emailValueErrorLabel = "Invalid email";
+        valid = false;
+      } else {
+        this.emailValueErrorLabel = "";
       }
+      if (!/^[\d\w\S]{8,}$/g.test(this.passValue)) {
+        this.passValueErrorLabel = "Invalid password";
+        valid = false;
+      } else {
+        this.passValueErrorLabel = "";
+      }
+      return valid;
+    },
+    async submitForm() {
+      if (this.formValidation())
+        try {
+          const logRes = await axios.post("/token", {
+            email: this.emailValue,
+            password: this.passValue,
+          });
+          this.$store.dispatch("login", logRes.data.token);
+          this.$router.push("/lobbies");
+        } catch (err) {
+          if (err.response.data == "Unauthorized") {
+            this.failedLogin = true;
+            this.failedLoginLabel = "Login failed. Wrong email or password";
+          }
+        }
     },
   },
 };

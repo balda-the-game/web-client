@@ -23,6 +23,7 @@
 
 <script>
 export default {
+	name: "WTextInput",
   props: {
     modelValue: String,
     type: String,
