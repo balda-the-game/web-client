@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <router-link to="/" class="navbar-item">
+      <router-link to="/" class="navbar-item" @click="isActive = false">
         <!-- <img
           src="https://avatars.githubusercontent.com/u/111589147?s=256"
           width="128"
@@ -12,7 +12,7 @@
 
       <a
         role="button"
-        @click="onBurgerTap"
+        @click="isActive = !isActive"
         class="navbar-burger"
         aria-label="menu"
         aria-expanded="false"
@@ -24,20 +24,37 @@
       </a>
     </div>
 
-    <div id="menu-items" :class="navbarMenuClass">
+    <div id="menu-items" class="navbar-menu" :class="{ 'is-active': isActive }">
       <div class="navbar-start">
-        <router-link to="/rules" class="navbar-item">
-          <a class="navbar-item py-3"> Rules </a>
+        <router-link
+          to="/rules"
+          class="navbar-item py-3"
+          @click="isActive = false"
+        >
+          Rules
         </router-link>
       </div>
 
       <div class="navbar-end">
-        <router-link to="/register" class="navbar-item">
-          <a class="navbar-item has-text-success is-small py-3"> Sign up </a>
+        <router-link
+          to="/register"
+          class="navbar-item has-text-success is-small py-3"
+          @click="isActive = false"
+          v-if="!this.$store.getters.authorized"
+        >
+          Sign up
         </router-link>
-        <router-link to="/login" class="navbar-item">
-          <a class="navbar-item is-small py-3"> Log in </a>
+        <router-link
+          to="/login"
+          class="navbar-item is-small py-3"
+          @click="isActive = false"
+          v-if="!this.$store.getters.authorized"
+        >
+          Log in
         </router-link>
+        <a class="navbar-item is-small py-3" @click="isActive = false; logout()" v-else>
+          Log out
+        </a>
       </div>
     </div>
   </nav>
@@ -49,18 +66,17 @@ export default {
   props: {},
   data() {
     return {
-      navbarMenuClass: ["navbar-menu"],
+      isActive: false,
     };
   },
   methods: {
-    onBurgerTap() {
-      console.log("onBurgerTap");
-      let i = this.navbarMenuClass.indexOf("is-active");
-      i > -1
-        ? this.navbarMenuClass.splice(i, 1)
-        : this.navbarMenuClass.push("is-active");
-    },
-  },
+		logout() {
+			console.log(this.$route.name)
+			if (["lobbies"].includes(this.$route.name))
+				this.$router.push("/")
+			this.$store.dispatch("logout");
+		}
+	},
 };
 </script>
 
