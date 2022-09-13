@@ -3,31 +3,53 @@
     <div class="level-left">
       <div class="level-item field has-addons mb-0 is-justify-content-center">
         <div class="control has-icons-right">
-          <input type="search" class="input is-rounded" placeholder="filter" />
+          <input
+						type="text"
+						class="input is-rounded"
+						placeholder="filter"
+						v-model="searchFilter"
+					/>
           <span class="icon is-small is-right">
             <i class="fas fa-search"></i>
           </span>
         </div>
         <div class="control">
-          <button class="button is-info is-rounded">Search</button>
+          <button
+						class="button is-info is-rounded"
+            @click="$emit('search', searchFilter)"
+					>Search</button>
         </div>
       </div>
 
       <div class="level-item field has-addons mb-0 is-justify-content-center">
         <div class="control has-icons-right">
-          <input type="text" class="input is-rounded" placeholder="room code" />
+          <input
+						type="text"
+						class="input is-rounded"
+						placeholder="room code"
+						v-model="lobbyCode"
+					/>
           <span class="icon is-small is-right">
             <i class="fas fa-key"></i>
           </span>
         </div>
         <div class="control">
-          <button class="button is-info is-rounded">Join</button>
+          <button
+            class="button is-info is-rounded"
+						:disabled="lobbyCode == ''"
+            @click="$emit('joinWithCode', lobbyCode)"
+          >
+            Join
+          </button>
         </div>
       </div>
 
       <div class="level-item field has-addons mb-0 is-justify-content-center">
         <div class="control">
-          <button class="button is-link is-rounded">
+          <button
+            class="button is-link is-rounded"
+            @click="$emit('refreshList')"
+          >
             <span>Refresh</span>
             <span class="icon is-small">
               <i class="fas fa-rotate-left"></i>
@@ -35,7 +57,10 @@
           </button>
         </div>
         <div class="control">
-          <button class="button is-primary is-rounded">
+          <button
+            class="button is-primary is-rounded"
+            @click="$emit('createLobby')"
+          >
             <span>Create</span>
             <span class="icon is-small">
               <i class="fas fa-plus"></i>
@@ -52,7 +77,10 @@ export default {
   name: "LobbyListControls",
   props: {},
   data() {
-    return {};
+    return {
+			lobbyCode: "",
+			searchFilter: "",
+		}
   },
   methods: {},
 };
