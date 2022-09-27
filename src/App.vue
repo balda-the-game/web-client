@@ -9,11 +9,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
+body {
   -ms-overflow-style: none;
   scrollbar-width: none;
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 }
 </style>
@@ -23,8 +23,8 @@ import NavBar from "@/components/NavBar";
 
 export default {
   components: { NavBar },
-	beforeCreate() {
-		this.$store.commit("LOAD_STORE");
-	}
+  beforeCreate() {
+    this.$store.commit("LOAD_STORE");
+  },
 };
 </script>

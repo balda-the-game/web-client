@@ -2,22 +2,39 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-		token: null,
+		userData: {
+			id: null,
+			name: null,
+			email: null,
+			token: null,
+		}
   },
   getters: {
 		authorized: state => {
-			return state.token != null
+			return state.userData.token != null
+		},
+		userData: state => {
+			return state.userData;
+		},
+		id: state => {
+			return state.userData.id;
+		},
+		name: state => {
+			return state.userData.name;
+		},
+		email: state => {
+			return state.userData.email;
 		},
 		token: state => {
-			return state.token;
-		}
+			return state.userData.token;
+		},
   },
   mutations: {
-		LOGIN: (state, token) => {
-			state.token = token;
+		LOGIN: (state, userData) => {
+			state.userData = userData;
 		},
 		LOGOUT: (state) => {
-			state.token = null;
+			state.userData = null;
 		},
     LOAD_STORE: (state) => {
       if (localStorage.getItem("balda-state")) {
@@ -34,8 +51,8 @@ export default createStore({
     logout: async (context) => {
       context.commit("LOGOUT");
     },
-    login: async (context, token) => {
-      context.commit("LOGIN", token);
+    login: async (context, userData) => {
+      context.commit("LOGIN", userData);
     },
   },
   modules: {

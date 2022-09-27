@@ -34,45 +34,11 @@
                 </tbody>
               </table>
             </div>
-            <nav
-              class="box pagination is-centered is-small is-link py-0 mr-3"
-              role="navigation"
-              aria-label="pagination"
-            >
-              <a class="pagination-previous">
-                <i class="fas fa-angle-left is-small"></i>
-              </a>
-              <a class="pagination-next">
-                <i class="fas fa-angle-right is-small"></i>
-              </a>
-              <ul class="pagination-list">
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 1">1</a>
-                </li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 45">45</a>
-                </li>
-                <li>
-                  <a
-                    class="pagination-link is-current"
-                    aria-label="Page 46"
-                    aria-current="page"
-                    >46</a
-                  >
-                </li>
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 47">47</a>
-                </li>
-                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 86">86</a>
-                </li>
-              </ul>
-            </nav>
           </section>
-          <section class="column is-one-third pl-0 mb-0">
-            <div class="box chat">Chat will be here</div>
+          <section class="column is-one-third mb-0">
+            <div class="box chat">
+             Chat will be here
+            </div>
           </section>
         </div>
       </div>
@@ -107,14 +73,14 @@ export default {
         });
         this.lobbies = res.data;
       } catch (err) {
-        console.log(err.response.data);
+        console.error(err.response.data);
         this.lobbies = [];
       }
     },
     async createLobbySubmit(lobby) {
       this.modalIsActive = false;
       try {
-        await axios({
+        const res = await axios({
           method: "post",
           url: "/lobbies",
           headers: {
@@ -122,7 +88,9 @@ export default {
           },
           data: lobby,
         });
-        this.loadLobbies();
+				this.$socket.emit("create_game", res.data);
+				if (res.data.id != null)
+					this.joinLobby(res.data.id, lobby.key);
       } catch (err) {
         console.error(err.response.data);
       }
@@ -130,17 +98,16 @@ export default {
     async joinLobby(id, key) {
       // FIXME: EMPTY REQ {} from forntend but not from postman when sending the key using body. Now it uses query pararm key
       const qskey = qs.stringify({ key: key });
-      console.log(qskey);
       try {
-        await axios({
+        const joinRes = await axios({
           method: "get",
           url: `/lobbies/${id}?${qskey}`,
           headers: {
             Authorization: `JWT ${this.$store.getters.token}`,
-          },
-          data: qs.stringify({ key: key }),
+          }
         });
-        this.loadLobbies();
+				if (joinRes.data.msg == "Connected")
+					this.$router.push(`/lobbies/${id}`)
       } catch (err) {
         console.error(err.response);
       }
@@ -166,34 +133,14 @@ table {
 .table-container {
   @media only screen and (max-width: 769px) {
     & {
-      max-height: 43vh;
+      max-height: 65vh;
     }
   }
-  max-height: 65vh;
+  height: 70vh;
   overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    margin-left: 10px;
-    width: 15px;
-  }
-  &::-webkit-scrollbar-track {
-    border-radius: 100px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: $green;
-    border: 5px solid transparent;
-    border-radius: 100px;
-    background-clip: content-box;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: $grey;
-    border: 5px solid transparent;
-    border-radius: 100px;
-    background-clip: content-box;
-  }
 }
-// TEMP PROPERTY
 .chat {
-  height: 100%;
+  height: 70vh;
+  overflow-y: scroll;
 }
 </style>

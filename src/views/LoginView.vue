@@ -82,7 +82,7 @@ export default {
             email: this.emailValue,
             password: this.passValue,
           });
-          this.$store.dispatch("login", logRes.data.token);
+          this.$store.dispatch("login", logRes.data);
           this.$router.push("/lobbies");
         } catch (err) {
           if (err.response.data == "Unauthorized") {

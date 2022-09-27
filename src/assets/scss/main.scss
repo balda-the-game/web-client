@@ -12,4 +12,24 @@ $family-sans-serif: "Roboto Slab";
 // $widescreen-enabled: false;
 // $fullhd-enabled: false;
 
+::-webkit-scrollbar {
+  margin-left: 10px;
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb {
+  background: $green;
+  border: 5px solid transparent;
+  border-radius: 100px;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $grey;
+  border: 5px solid transparent;
+  border-radius: 100px;
+  background-clip: content-box;
+}
+
 @import "~bulma"; // And then importing Bulma

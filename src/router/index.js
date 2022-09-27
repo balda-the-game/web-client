@@ -26,6 +26,11 @@ const routes = [
     name: 'lobbies',
     component: () => import(/* webpackChunkName: "lobbies" */ '../views/LobbyListView.vue')
   },
+	{
+		path:'/lobbies/:id',
+		name: 'game',
+		component: () => import(/* webpackChunkName: "game" */ '../views/GameView.vue')
+	},
   {
 	path: '/404',
 	name: 'notFound',

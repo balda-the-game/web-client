@@ -11,8 +11,10 @@
     "axios": "^0.27.2",
     "bulma": "^0.9.4",
     "core-js": "^3.8.3",
+    "socket.io-client": "^4.5.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-socket.io": "https://github.com/MetinSeylan/Vue-Socket.io.git",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
