@@ -6,26 +6,8 @@
 					<div class="column is-5-tablet is-4-desktop is-5-widescreen">
 						<form @submit.prevent="submitForm" class="box">
 							<WTextInput
-								type="username"
-								label="username"
-								placeholder="username"
-								icon-class="fas fa-user"
-								:error-label="usernameErrorLabel"
-								:invalid="usernameErrorLabel != ''"
-								v-model.trim="username"
-							/>
-							<WTextInput
-								type="email"
-								label="email"
-								placeholder="example@email.com"
-								icon-class="fas fa-at"
-								:error-label="emailErrorLabel"
-								:invalid="emailErrorLabel != ''"
-								v-model.trim="email"
-							/>
-							<WTextInput
 								type="password"
-								label="password"
+								label="New password"
 								placeholder="********"
 								icon-class="fas fa-key"
 								:error-label="passwordErrorLabel"
@@ -34,7 +16,7 @@
 							/>
 							<WTextInput
 								type="password"
-								label="confirm password"
+								label="Confirm new password"
 								placeholder="********"
 								icon-class="fas fa-key"
 								:error-label="passwordConfirmErrorLabel"
@@ -46,7 +28,9 @@
 								:class="{ 'is-hidden': !failure }"
 								>{{ failureMessage }}</label
 							>
-							<button type="submit" class="button is-success">Register</button>
+							<button type="submit" class="button is-success">
+								Change password
+							</button>
 						</form>
 					</div>
 				</div>
@@ -61,16 +45,12 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
 export default {
-	name: "RegisterView",
+	name: "ResetPassword",
 	components: { WTextInput },
 	data() {
 		return {
-			username: "",
-			email: "",
 			password: "",
 			passwordConfirm: "",
-			usernameErrorLabel: "",
-			emailErrorLabel: "",
 			passwordErrorLabel: "",
 			passwordConfirmErrorLabel: "",
 		};
@@ -79,21 +59,9 @@ export default {
 		...mapGetters(["failure", "failureMessage"]),
 	},
 	methods: {
-		...mapActions(["register"]),
+		...mapActions(["login", "update"]),
 		formValidation() {
 			let valid = true;
-			if (!/^[^\W\d][\d\w]{2,16}$/g.test(this.username)) {
-				this.usernameErrorLabel = "Use letters and digits 2 to 16 length";
-				valid = false;
-			} else {
-				this.usernameErrorLabel = "";
-			}
-			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email)) {
-				this.emailErrorLabel = "Please enter a valid email address";
-				valid = false;
-			} else {
-				this.emailErrorLabel = "";
-			}
 			if (!/^[\d\w\S]{8,}$/g.test(this.password)) {
 				this.passwordErrorLabel = "Wrong pass pattern. 8 char length minimum";
 				valid = false;
@@ -113,19 +81,12 @@ export default {
 		},
 		async submitForm() {
 			if (this.formValidation()) {
-				await this.register({
-					email: this.email,
-					password: this.password,
-					username: this.username,
-				});
+				await this.update({ password: this.password });
 				if (!this.failure)
-					this.$router.push({
-						name: "profile",
-					});
+					// TODO: Show success notification 'Success password reset'
+					this.$router.push("/login");
 			}
 		},
 	},
 };
 </script>
-
-<style lang="scss" scoped></style>

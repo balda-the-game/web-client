@@ -1,50 +1,71 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/HomeView.vue')
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/RegisterView.vue')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
-  },
-  {
-    path: '/rules',
-    name: 'rules',
-    component: () => import(/* webpackChunkName: "rules" */ '../views/RulesView.vue')
-  },
-  {
-    path: '/lobbies',
-    name: 'lobbies',
-    component: () => import(/* webpackChunkName: "lobbies" */ '../views/LobbyListView.vue')
-  },
 	{
-		path:'/lobbies/:id',
-		name: 'game',
-		component: () => import(/* webpackChunkName: "game" */ '../views/GameView.vue')
+		path: "/",
+		name: "home",
+		component: () =>
+			import(/* webpackChunkName: "home" */ "../views/HomeView.vue"),
 	},
-  {
-	path: '/404',
-	name: 'notFound',
-	component: () => import(/* webpackChunkName: "notFound" */ '../views/404.vue')
-  },
-  {
-	path: '/:catchAll(.*)',
-	redirect: '/404'
-  }
-]
+	{
+		path: "/register",
+		name: "register",
+		component: () =>
+			import(/* webpackChunkName: "register" */ "../views/RegisterView.vue"),
+	},
+	{
+		path: "/login",
+		name: "login",
+		component: () =>
+			import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+	},
+	{
+		path: "/reset-password",
+		name: "resetPassword",
+		component: () =>
+			import(
+				/* webpackChunkName: "resetPassword" */ "../views/ResetPassword.vue"
+			),
+	},
+	{
+		path: "/rules",
+		name: "rules",
+		component: () =>
+			import(/* webpackChunkName: "rules" */ "../views/RulesView.vue"),
+	},
+	{
+		path: "/lobbies",
+		name: "lobbies",
+		component: () =>
+			import(/* webpackChunkName: "lobbies" */ "../views/LobbyListView.vue"),
+	},
+	{
+		path: "/lobbies/:id",
+		name: "game",
+		component: () =>
+			import(/* webpackChunkName: "game" */ "../views/GameView.vue"),
+	},
+	{
+		path: "/profile",
+		name: "profile",
+		component: () =>
+			import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
+	},
+	{
+		path: "/404",
+		name: "notFound",
+		component: () =>
+			import(/* webpackChunkName: "notFound" */ "../views/404.vue"),
+	},
+	{
+		path: "/:catchAll(.*)",
+		redirect: "/404",
+	},
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+	history: createWebHistory(process.env.BASE_URL),
+	routes,
+});
 
 export default router;

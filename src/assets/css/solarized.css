@@ -1,0 +1,52 @@
+:root {
+  --solarized_base03: #002b36;
+  --solarized_base02: #073642;
+  --solarized_base01: #586e75;
+  --solarized_base00: #657b83;
+  --solarized_base0: #839496;
+  --solarized_base1: #93a1a1;
+  --solarized_base2: #eee8d5;
+  --solarized_base3: #fdf6e3;
+  --solarized_yellow: #b58900;
+  --solarized_orange: #cb4b16;
+  --solarized_red: #dc322f;
+  --solarized_magenta: #d33682;
+  --solarized_violet: #6c71c4;
+  --solarized_blue: #268bd2;
+  --solarized_cyan: #2aa198;
+  --solarized_green: #859900;
+}
+
+.solarized-light {
+  --background: var(--solarized_base3);
+  --background-alt: var(--solarized_base2);
+
+  --foreground: var(--solarized_base01);
+  --foreground-alt: var(--solarized_base1);
+
+  --red-color:    var(--solarized_red);
+  --green-color:  var(--solarized_green);
+  --yellow-color: var(--solarized_yellow);
+  --blue-color:   var(--solarized_blue);
+  --purple-color: var(--solarized_magenta);
+  --aqua-color:   var(--solarized_cyan);
+  --gray-color:   var(--solarized_violet);
+  --orange-color: var(--solarized_orange);
+}
+
+.solarized-dark {
+  --background: var(--solarized_base03);
+  --background-alt: var(--solarized_base02);
+
+  --foreground: var(--solarized_base0);
+  --foreground-alt: var(--solarized_base1);
+
+  --red-color:    var(--solarized_red);
+  --green-color:  var(--solarized_green);
+  --yellow-color: var(--solarized_yellow);
+  --blue-color:   var(--solarized_blue);
+  --purple-color: var(--solarized_magenta);
+  --aqua-color:   var(--solarized_cyan);
+  --gray-color:   var(--solarized_violet);
+  --orange-color: var(--solarized_orange);
+}

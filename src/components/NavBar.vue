@@ -1,88 +1,100 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <router-link to="/" class="navbar-item" @click="isActive = false">
-        <!-- <img
-          src="https://avatars.githubusercontent.com/u/111589147?s=256"
-          width="128"
-          height="12"
-        /> -->
-        <strong>BALDA</strong>
-      </router-link>
+	<nav class="navbar" role="navigation">
+		<div class="navbar-brand">
+			<router-link to="/" class="navbar-item" @click="isActive = false">
+				<strong>BALDA</strong>
+			</router-link>
 
-      <a
-        role="button"
-        @click="isActive = !isActive"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="menu-items"
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
+			<a
+				role="button"
+				@click="isActive = !isActive"
+				class="navbar-burger"
+				data-target="menu-items"
+			>
+				<span></span>
+				<span></span>
+				<span></span>
+			</a>
+		</div>
 
-    <div id="menu-items" class="navbar-menu" :class="{ 'is-active': isActive }">
-      <div class="navbar-start">
-        <router-link
-          to="/rules"
-          class="navbar-item py-3"
-          @click="isActive = false"
-        >
-          Rules
-        </router-link>
-      </div>
+		<div
+			class="navbar-menu"
+			@click="isActive = false"
+			:class="{ 'is-active': isActive }"
+		>
+			<div class="navbar-start">
+				<router-link to="/rules" class="navbar-item py-3"> Rules </router-link>
+				<router-link to="/lobbies" class="navbar-item py-3" v-if="authorized">
+					Lobbies
+				</router-link>
+			</div>
 
-      <div class="navbar-end">
-        <router-link
-          to="/register"
-          class="navbar-item has-text-success is-small py-3"
-          @click="isActive = false"
-          v-if="!this.$store.getters.authorized"
-        >
-          Sign up
-        </router-link>
-        <router-link
-          to="/login"
-          class="navbar-item is-small py-3"
-          @click="isActive = false"
-          v-if="!this.$store.getters.authorized"
-        >
-          Log in
-        </router-link>
-        <a class="navbar-item is-small py-3" @click="isActive = false; logout()" v-else>
-          Log out
-        </a>
-      </div>
-    </div>
-  </nav>
+			<div class="navbar-end" v-if="authorized">
+				<div class="navbar-item dropdown is-hoverable py-3">
+					<div class="dropdown-trigger">
+						<div class="has-text-success">
+							<span> {{ user.username }}</span>
+							<span class="icon is-small">
+								<i class="fas fa-angle-down"></i>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu p-1">
+						<div class="dropdown-content">
+							<router-link to="/profile" class="dropdown-item is-small py-3">
+								Profile
+							</router-link>
+							<hr class="dropdown-divider" />
+							<a class="dropdown-item is-small py-3" @click.self="logout()">
+								Log out
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar-end" v-else>
+				<router-link
+					to="/register"
+					class="navbar-item has-text-success is-small py-3"
+				>
+					Sign up
+				</router-link>
+				<router-link to="/login" class="navbar-item is-small py-3">
+					Log in
+				</router-link>
+			</div>
+		</div>
+	</nav>
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("auth");
+
 export default {
-  name: "NavBar",
-  props: {},
-  data() {
-    return {
-      isActive: false,
-    };
-  },
-  methods: {
-		logout() {
-			console.log(this.$route.name)
-			if (["lobbies"].includes(this.$route.name))
-				this.$router.push("/")
-			this.$store.dispatch("logout");
-		}
+	name: "NavBar",
+	props: {},
+	data() {
+		return {
+			isActive: false,
+		};
+	},
+	computed: {
+		...mapGetters(["authorized", "user"]),
+	},
+	methods: {
+		async logout() {
+			await this.$router.push("/");
+			this.$store.dispatch("auth/logout");
+		},
 	},
 };
 </script>
 
 <style scoped lang="scss">
 .navbar * {
-  padding-top: 0;
-  padding-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 </style>

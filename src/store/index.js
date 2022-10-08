@@ -1,60 +1,34 @@
-import { createStore } from 'vuex';
+import { createStore, createLogger } from "vuex";
+import auth from "./modules/auth";
+import game from "./modules/game";
+
+const debug = process.env.NODE_ENV !== "production";
 
 export default createStore({
-  state: {
-		userData: {
-			id: null,
-			name: null,
-			email: null,
-			token: null,
-		}
-  },
-  getters: {
-		authorized: state => {
-			return state.userData.token != null
+	// All modules use namespaced: true flag
+	// States: $store.auth.user
+	// Getters: $state.getters['moduleName/getterName']
+	// Actions: $state.dispatch('moduleName/actionName')
+	// Mutations: commit('moduleName/MUTATION_NAME') /* Don't do this that way, use actions */
+	modules: {
+		auth: auth,
+		game: game,
+	},
+	strict: debug,
+	plugins: debug ? [createLogger()] : [],
+
+	mutations: {
+		LOAD_STORE: (state) => {
+			if (localStorage.getItem("balda-state")) {
+				try {
+					Object.assign(state, JSON.parse(localStorage.getItem("balda-state")));
+				} catch (e) {
+					console.group();
+					console.error("Could not initialize store.");
+					console.error(e);
+					console.groupEnd();
+				}
+			}
 		},
-		userData: state => {
-			return state.userData;
-		},
-		id: state => {
-			return state.userData.id;
-		},
-		name: state => {
-			return state.userData.name;
-		},
-		email: state => {
-			return state.userData.email;
-		},
-		token: state => {
-			return state.userData.token;
-		},
-  },
-  mutations: {
-		LOGIN: (state, userData) => {
-			state.userData = userData;
-		},
-		LOGOUT: (state) => {
-			state.userData = null;
-		},
-    LOAD_STORE: (state) => {
-      if (localStorage.getItem("balda-state")) {
-        try {
-          Object.assign(state, JSON.parse(localStorage.getItem("balda-state")));
-        }
-        catch (e) {
-          console.error("ERR: Could not initialize store.", e);
-        }
-      }
-    },
-  },
-  actions: {
-    logout: async (context) => {
-      context.commit("LOGOUT");
-    },
-    login: async (context, userData) => {
-      context.commit("LOGIN", userData);
-    },
-  },
-  modules: {
-  }
+	},
 });
