@@ -5,7 +5,7 @@ import store from "./store";
 // import socketio from 'socket.io-client'
 // import VueSocketIO from 'vue-socket.io'
 
-require("@/assets/scss/main.scss");
+import "@/assets/scss/main.scss";
 
 store.subscribe((mutation, state) => {
 	if (!["LOAD_STORE", "auth/SUCCESS", "auth/FAILURE"].includes(mutation.type)) {

@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.VUE_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.VUE_APP_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -37,7 +37,7 @@ export async function update(data) {
 }
 export async function sendResetPasswordEmail(email) {
 	const { error } = await supabase.auth.api.resetPasswordForEmail(email, {
-		redirectTo: `${process.env.VUE_APP_BASE_URL}/reset-password`,
+		redirectTo: `${import.meta.env.BASE_URL}/reset-password`,
 	});
 	if (error) throw error;
 }

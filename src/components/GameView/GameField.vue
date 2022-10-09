@@ -10,10 +10,10 @@
 
 		<div class="gamefield__keyboard keyboard buttons are-small">
 			<button
-				class="keyboard__key button is-static"
 				v-for="key in alphabetArray"
 				:key="key"
-				v-html="key"
+				class="keyboard__key button is-static"
+				v-text="key"
 			></button>
 		</div>
 	</div>
@@ -23,10 +23,15 @@
 export default {
 	name: "GameField",
 	props: {
-		dimention: Number,
-		alphabet: String,
+		dimention: {
+			type: Number,
+			required: true,
+		},
+		alphabet: {
+			type: String,
+			required: true,
+		},
 	},
-	methods: {},
 	computed: {
 		alphabetArray: {
 			get() {
@@ -34,6 +39,7 @@ export default {
 			},
 		},
 	},
+	methods: {},
 };
 </script>
 

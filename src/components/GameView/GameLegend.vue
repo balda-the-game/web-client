@@ -3,9 +3,9 @@
 		<div class="legend__list">
 			<div class="title is-5 has-text-dark">Legend</div>
 			<div
-				class="message is-small"
 				v-for="player in Object.keys(legend)"
 				:key="player"
+				class="message is-small"
 			>
 				<div class="message-body p-2">
 					<div class="title is-7 has-text-dark m-1">
@@ -56,9 +56,11 @@
 export default {
 	name: "GameLegend",
 	props: {
-		legend: Object,
+		legend: {
+			type: Object,
+			required: true,
+		},
 	},
-	methods: {},
 	computed: {
 		alphabetArray: {
 			get() {
@@ -66,6 +68,7 @@ export default {
 			},
 		},
 	},
+	methods: {},
 };
 </script>
 

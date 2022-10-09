@@ -2,17 +2,17 @@
 	<CreateLobbyModal
 		:is-active="modalIsActive"
 		@confirm="createLobbySubmit"
-		@cancel="this.modalIsActive = false"
+		@cancel="modalIsActive = false"
 	/>
 	<div class="lobbies box hero is-fullheight-with-navbar is-primary">
 		<div class="hero-body is-block p-0">
 			<div class="container">
 				<LobbyListControls
 					class="box"
-					@createLobby="modalIsActive = true"
-					@refreshList="loadLobbies"
+					@create-lobby="modalIsActive = true"
+					@refresh-list="loadLobbies"
 					@search="search"
-					@joinWithCode="joinLobbyWithCode"
+					@join-with-code="joinLobbyWithCode"
 				/>
 				<div class="columns">
 					<section class="column block pr-0 mb-0">
@@ -21,8 +21,8 @@
 								<tbody>
 									<LobbyListEntry
 										v-for="lobby in lobbies"
-										:key="lobby.id"
 										:id="lobby.id"
+										:key="lobby.id"
 										:title="lobby.title"
 										:slots="lobby.slots"
 										:free-slots="lobby.free_slots"
@@ -58,6 +58,9 @@ export default {
 			modalIsActive: false,
 			lobbies: [],
 		};
+	},
+	mounted() {
+		this.loadLobbies();
 	},
 	methods: {
 		async loadLobbies() {
@@ -115,9 +118,6 @@ export default {
 		search(filter) {
 			console.log("searching: ", filter);
 		},
-	},
-	mounted() {
-		this.loadLobbies();
 	},
 };
 </script>

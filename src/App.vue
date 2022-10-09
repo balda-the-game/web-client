@@ -3,6 +3,17 @@
 	<router-view />
 </template>
 
+<script>
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+	components: { NavBar },
+	beforeCreate() {
+		this.$store.commit("LOAD_STORE");
+	},
+};
+</script>
+
 <style lang="scss">
 #app {
 	-webkit-font-smoothing: antialiased;
@@ -17,14 +28,3 @@ body {
 	}
 }
 </style>
-
-<script>
-import NavBar from "@/components/NavBar";
-
-export default {
-	components: { NavBar },
-	beforeCreate() {
-		this.$store.commit("LOAD_STORE");
-	},
-};
-</script>

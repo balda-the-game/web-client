@@ -9,11 +9,11 @@
 			</div>
 			<span class="container">
 				<i
-					class="fas fa-user is-large"
 					v-for="i of slots - freeSlots"
 					:key="i"
+					class="fas fa-user is-large"
 				></i>
-				<i class="far fa-user is-large" v-for="i of freeSlots" :key="i"></i>
+				<i v-for="i of freeSlots" :key="i" class="far fa-user is-large"></i>
 			</span>
 		</td>
 		<td style="width: 6.5rem">
@@ -38,11 +38,11 @@
 				<i v-else class="fas fa-lock-open is-large"></i>
 				<div class="control">
 					<input
+						v-model="key"
 						type="password"
 						class="input is-small has-addons"
 						placeholder="********"
 						:disabled="!locked || freeSlots == 0"
-						v-model="key"
 					/>
 				</div>
 				<div class="control">
@@ -63,14 +63,33 @@
 export default {
 	name: "LobbyListEntry",
 	props: {
-		id: String,
-		title: String,
-		slots: Number,
-		freeSlots: Number,
-		dimention: Number,
-		language: String,
+		id: {
+			type: Number,
+			required: true,
+		},
+		title: {
+			type: String,
+			required: true,
+		},
+		slots: {
+			type: Number,
+			required: true,
+		},
+		freeSlots: {
+			type: Number,
+			required: true,
+		},
+		dimention: {
+			type: Number,
+			required: true,
+		},
+		language: {
+			type: String,
+			required: true,
+		},
 		locked: Boolean,
 	},
+	emits: ["join"],
 	data() {
 		return {
 			key: "",

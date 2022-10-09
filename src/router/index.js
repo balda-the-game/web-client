@@ -4,58 +4,47 @@ const routes = [
 	{
 		path: "/",
 		name: "home",
-		component: () =>
-			import(/* webpackChunkName: "home" */ "../views/HomeView.vue"),
+		component: () => import("../views/HomeView.vue"),
 	},
 	{
 		path: "/register",
 		name: "register",
-		component: () =>
-			import(/* webpackChunkName: "register" */ "../views/RegisterView.vue"),
+		component: () => import("../views/RegisterView.vue"),
 	},
 	{
 		path: "/login",
 		name: "login",
-		component: () =>
-			import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+		component: () => import("../views/LoginView.vue"),
 	},
 	{
 		path: "/reset-password",
 		name: "resetPassword",
-		component: () =>
-			import(
-				/* webpackChunkName: "resetPassword" */ "../views/ResetPassword.vue"
-			),
+		component: () => import("../views/ResetPassword.vue"),
 	},
 	{
 		path: "/rules",
 		name: "rules",
-		component: () =>
-			import(/* webpackChunkName: "rules" */ "../views/RulesView.vue"),
+		component: () => import("../views/RulesView.vue"),
 	},
 	{
 		path: "/lobbies",
 		name: "lobbies",
-		component: () =>
-			import(/* webpackChunkName: "lobbies" */ "../views/LobbyListView.vue"),
+		component: () => import("../views/LobbyListView.vue"),
 	},
 	{
 		path: "/lobbies/:id",
 		name: "game",
-		component: () =>
-			import(/* webpackChunkName: "game" */ "../views/GameView.vue"),
+		component: () => import("../views/GameView.vue"),
 	},
 	{
 		path: "/profile",
 		name: "profile",
-		component: () =>
-			import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
+		component: () => import("../views/Profile.vue"),
 	},
 	{
 		path: "/404",
 		name: "notFound",
-		component: () =>
-			import(/* webpackChunkName: "notFound" */ "../views/404.vue"),
+		component: () => import("../views/404.vue"),
 	},
 	{
 		path: "/:catchAll(.*)",
@@ -64,7 +53,7 @@ const routes = [
 ];
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
+	history: createWebHistory(import.meta.env.BASE_URL),
 	routes,
 });
 

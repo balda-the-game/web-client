@@ -4,42 +4,42 @@
 			<div class="container">
 				<div class="columns is-centered">
 					<div class="column is-5-tablet is-4-desktop is-5-widescreen">
-						<form @submit.prevent="submitForm" class="box">
+						<form class="box" @submit.prevent="submitForm">
 							<WTextInput
+								v-model.trim="username"
 								type="username"
 								label="username"
 								placeholder="username"
 								icon-class="fas fa-user"
 								:error-label="usernameErrorLabel"
 								:invalid="usernameErrorLabel != ''"
-								v-model.trim="username"
 							/>
 							<WTextInput
+								v-model.trim="email"
 								type="email"
 								label="email"
 								placeholder="example@email.com"
 								icon-class="fas fa-at"
 								:error-label="emailErrorLabel"
 								:invalid="emailErrorLabel != ''"
-								v-model.trim="email"
 							/>
 							<WTextInput
+								v-model.trim="password"
 								type="password"
 								label="password"
 								placeholder="********"
 								icon-class="fas fa-key"
 								:error-label="passwordErrorLabel"
 								:invalid="passwordErrorLabel != ''"
-								v-model.trim="password"
 							/>
 							<WTextInput
+								v-model.trim="passwordConfirm"
 								type="password"
 								label="confirm password"
 								placeholder="********"
 								icon-class="fas fa-key"
 								:error-label="passwordConfirmErrorLabel"
 								:invalid="passwordConfirmErrorLabel != ''"
-								v-model.trim="passwordConfirm"
 							/>
 							<label
 								class="help is-danger"

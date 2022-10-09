@@ -4,10 +4,10 @@
 			<div class="level-item field has-addons mb-0 is-justify-content-center">
 				<div class="control has-icons-right">
 					<input
+						v-model="searchFilter"
 						type="text"
 						class="input is-rounded"
 						placeholder="filter"
-						v-model="searchFilter"
 					/>
 					<span class="icon is-small is-right">
 						<i class="fas fa-search"></i>
@@ -26,10 +26,10 @@
 			<div class="level-item field has-addons mb-0 is-justify-content-center">
 				<div class="control has-icons-right">
 					<input
+						v-model="lobbyCode"
 						type="text"
 						class="input is-rounded"
 						placeholder="room code"
-						v-model="lobbyCode"
 					/>
 					<span class="icon is-small is-right">
 						<i class="fas fa-key"></i>
@@ -78,6 +78,7 @@
 export default {
 	name: "LobbyListControls",
 	props: {},
+	emits: ["search", "joinWithCode", "refreshList", "createLobby"],
 	data() {
 		return {
 			lobbyCode: "",

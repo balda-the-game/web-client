@@ -11,10 +11,10 @@
 					<label class="label">Title</label>
 					<div class="control">
 						<input
+							v-model="lobby.title"
 							type="text"
 							class="input"
 							placeholder="lobby title"
-							v-model="lobby.title"
 						/>
 					</div>
 				</div>
@@ -24,10 +24,10 @@
 					>
 					<div class="control">
 						<input
+							v-model="lobby.key"
 							type="text"
 							class="input"
 							placeholder="leave empty if don't need it"
-							v-model="lobby.key"
 						/>
 					</div>
 				</div>
@@ -95,6 +95,7 @@ export default {
 	props: {
 		isActive: Boolean,
 	},
+	emits: ["confirm", "cancel"],
 	data() {
 		return {
 			lobby: {

@@ -90,13 +90,13 @@ export default {
 			},
 		};
 	},
-	methods: {
-		leave_game() {},
-	},
 	mounted() {},
 	beforeCreate() {
 		// TODO: Check if the game exists. If it is and not started yet then join. Else 404
 		// TODO: Connect to the server socket. And get the list of the game state
+	},
+	methods: {
+		leave_game() {},
 	},
 };
 </script>

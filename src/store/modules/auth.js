@@ -5,7 +5,7 @@ import {
 	update,
 	sendResetPasswordEmail,
 	getUserProfile,
-} from "@/lib/api/supabase";
+} from "@/lib/api/supabase.js";
 
 const state = () => ({
 	user: null,

@@ -25,12 +25,30 @@
 export default {
 	name: "WTextInput",
 	props: {
-		modelValue: String,
-		type: String,
-		placeholder: String,
-		label: String,
-		iconClass: String,
-		errorLabel: String,
+		modelValue: {
+			type: String,
+			default: "",
+		},
+		type: {
+			type: String,
+			default: "",
+		},
+		placeholder: {
+			type: String,
+			default: "",
+		},
+		label: {
+			type: String,
+			default: "",
+		},
+		iconClass: {
+			type: String,
+			default: "",
+		},
+		errorLabel: {
+			type: String,
+			default: "",
+		},
 		invalid: Boolean,
 		disabled: Boolean,
 	},

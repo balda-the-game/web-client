@@ -2,7 +2,7 @@ import { createStore, createLogger } from "vuex";
 import auth from "./modules/auth";
 import game from "./modules/game";
 
-const debug = process.env.NODE_ENV !== "production";
+const debug = import.meta.env.NODE_ENV !== "production";
 
 export default createStore({
 	// All modules use namespaced: true flag

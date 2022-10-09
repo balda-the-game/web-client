@@ -7,9 +7,9 @@
 
 			<a
 				role="button"
-				@click="isActive = !isActive"
 				class="navbar-burger"
 				data-target="menu-items"
+				@click="isActive = !isActive"
 			>
 				<span></span>
 				<span></span>
@@ -19,17 +19,17 @@
 
 		<div
 			class="navbar-menu"
-			@click="isActive = false"
 			:class="{ 'is-active': isActive }"
+			@click="isActive = false"
 		>
 			<div class="navbar-start">
 				<router-link to="/rules" class="navbar-item py-3"> Rules </router-link>
-				<router-link to="/lobbies" class="navbar-item py-3" v-if="authorized">
+				<router-link v-if="authorized" to="/lobbies" class="navbar-item py-3">
 					Lobbies
 				</router-link>
 			</div>
 
-			<div class="navbar-end" v-if="authorized">
+			<div v-if="authorized" class="navbar-end">
 				<div class="navbar-item dropdown is-hoverable py-3">
 					<div class="dropdown-trigger">
 						<div class="has-text-success">
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 
-			<div class="navbar-end" v-else>
+			<div v-else class="navbar-end">
 				<router-link
 					to="/register"
 					class="navbar-item has-text-success is-small py-3"

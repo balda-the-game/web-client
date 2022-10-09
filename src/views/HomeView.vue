@@ -103,5 +103,3 @@ export default {
 	components: { FooterComp },
 };
 </script>
-
-<style lang="scss" scoped></style>

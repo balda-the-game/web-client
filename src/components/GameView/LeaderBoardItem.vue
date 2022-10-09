@@ -23,13 +23,23 @@
 export default {
 	name: "LeaderBoardItem",
 	props: {
-		avatar: URL,
-		name: String,
-		score: Number,
-		penalty: Number,
+		avatar: {
+			type: String, // Avatar URL
+			required: true,
+		},
+		name: {
+			type: String,
+			required: true,
+		},
+		score: {
+			type: Number,
+			required: true,
+		},
+		penalty: {
+			type: Number,
+			required: true,
+		},
 	},
 	methods: {},
 };
 </script>
-
-<style lang="scss" scoped></style>
