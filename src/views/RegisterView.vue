@@ -60,6 +60,7 @@ import WTextInput from "@/components/Core/WTextInput.vue";
 import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+import throttle from "lodash/throttle";
 
 export default {
 	name: "RegisterView",
@@ -101,19 +102,23 @@ export default {
 				0
 			);
 		},
-		async submitForm() {
-			if (this.formValidation()) {
-				await this.register({
-					email: this.email,
-					password: this.password,
-					username: this.username,
-				});
-				if (!this.failure)
-					this.$router.push({
-						name: "profile",
+		submitForm: throttle(
+			async function () {
+				if (this.formValidation()) {
+					await this.register({
+						email: this.email,
+						password: this.password,
+						username: this.username,
 					});
-			}
-		},
+					if (!this.failure)
+						this.$router.push({
+							name: "profile",
+						});
+				}
+			},
+			1000,
+			{ trailing: false }
+		),
 	},
 };
 </script>

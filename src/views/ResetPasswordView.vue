@@ -44,6 +44,7 @@ import WTextInput from "@/components/Core/WTextInput.vue";
 import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+import throttle from "lodash/throttle";
 
 export default {
 	name: "ResetPassword",
@@ -73,14 +74,18 @@ export default {
 				0
 			);
 		},
-		async submitForm() {
-			if (this.formValidation()) {
-				await this.update({ password: this.password });
-				if (!this.failure)
-					// TODO: Show success notification 'Success password reset'
-					this.$router.push("/login");
-			}
-		},
+		submitForm: throttle(
+			async function () {
+				if (this.formValidation()) {
+					await this.update({ password: this.password });
+					if (!this.failure)
+						// TODO: Show success notification 'Success password reset'
+						this.$router.push("/login");
+				}
+			},
+			1000,
+			{ trailing: false }
+		),
 	},
 };
 </script>

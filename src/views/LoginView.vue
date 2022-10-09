@@ -77,6 +77,7 @@ import WTextInput from "@/components/Core/WTextInput.vue";
 import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+import throttle from "lodash/throttle";
 
 export default {
 	name: "LoginView",
@@ -104,23 +105,31 @@ export default {
 				: "";
 			return this.emailErrorLabel.length + this.passwordErrorLabel.length == 0;
 		},
-		async submitLogin() {
-			if (this.loginFormValidation()) {
-				await this.login({ email: this.email, password: this.password });
-				if (!this.failure) this.$router.push("/profile");
-			}
-		},
-		async submitReset() {
-			this.emailErrorLabel = !validator.email(this.email)
-				? "Invalid email"
-				: "";
-			if (this.emailErrorLabel.length == 0) {
-				await this.sendResetPasswordEmail(this.email);
-				// TODO: Show success notification 'Success! Check email'
-				this.email = "";
-				this.showResetPassword = false;
-			}
-		},
+		submitLogin: throttle(
+			async function () {
+				if (this.loginFormValidation()) {
+					await this.login({ email: this.email, password: this.password });
+					if (!this.failure) this.$router.push("/profile");
+				}
+			},
+			1000,
+			{ trailing: false }
+		),
+		submitReset: throttle(
+			async function () {
+				this.emailErrorLabel = !validator.email(this.email)
+					? "Invalid email"
+					: "";
+				if (this.emailErrorLabel.length == 0) {
+					await this.sendResetPasswordEmail(this.email);
+					// TODO: Show success notification 'Success! Check email'
+					this.email = "";
+					this.showResetPassword = false;
+				}
+			},
+			1000,
+			{ trailing: false }
+		),
 	},
 };
 </script>
