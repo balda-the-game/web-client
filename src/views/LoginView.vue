@@ -74,6 +74,7 @@
 
 <script>
 import WTextInput from "@/components/Core/WTextInput.vue";
+import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
@@ -95,20 +96,13 @@ export default {
 	methods: {
 		...mapActions(["login", "sendResetPasswordEmail"]),
 		loginFormValidation() {
-			let valid = true;
-			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email)) {
-				this.emailErrorLabel = "Invalid email";
-				valid = false;
-			} else {
-				this.emailErrorLabel = "";
-			}
-			if (!/^[\d\w\S]{8,}$/g.test(this.password)) {
-				this.passwordErrorLabel = "Invalid password";
-				valid = false;
-			} else {
-				this.passwordErrorLabel = "";
-			}
-			return valid;
+			this.emailErrorLabel = !validator.email(this.email)
+				? "Invalid email"
+				: "";
+			this.passwordErrorLabel = !validator.password(this.password)
+				? "Invalid password"
+				: "";
+			return this.emailErrorLabel.length + this.passwordErrorLabel.length == 0;
 		},
 		async submitLogin() {
 			if (this.loginFormValidation()) {
@@ -117,12 +111,15 @@ export default {
 			}
 		},
 		async submitReset() {
-			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email))
-				this.emailErrorLabel = "Invalid email";
-			else await this.sendResetPasswordEmail(this.email);
-			// TODO: Show success notification 'Success! Check email'
-			this.email = "";
-			this.showResetPassword = false;
+			this.emailErrorLabel = !validator.email(this.email)
+				? "Invalid email"
+				: "";
+			if (this.emailErrorLabel.length == 0) {
+				await this.sendResetPasswordEmail(this.email);
+				// TODO: Show success notification 'Success! Check email'
+				this.email = "";
+				this.showResetPassword = false;
+			}
 		},
 	},
 };

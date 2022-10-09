@@ -57,6 +57,7 @@
 
 <script>
 import WTextInput from "@/components/Core/WTextInput.vue";
+import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
@@ -81,35 +82,24 @@ export default {
 	methods: {
 		...mapActions(["register"]),
 		formValidation() {
-			let valid = true;
-			if (!/^[^\W\d][\d\w]{2,16}$/g.test(this.username)) {
-				this.usernameErrorLabel = "Use letters and digits 2 to 16 length";
-				valid = false;
-			} else {
-				this.usernameErrorLabel = "";
-			}
-			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.email)) {
-				this.emailErrorLabel = "Please enter a valid email address";
-				valid = false;
-			} else {
-				this.emailErrorLabel = "";
-			}
-			if (!/^[\d\w\S]{8,}$/g.test(this.password)) {
-				this.passwordErrorLabel = "Wrong pass pattern. 8 char length minimum";
-				valid = false;
-			} else {
-				this.passwordErrorLabel = "";
-			}
-			if (
-				this.password != this.passwordConfirm ||
-				this.passwordConfirm.length == 0
-			) {
-				this.passwordConfirmErrorLabel = "Passwords doesn't match";
-				valid = false;
-			} else {
-				this.passwordConfirmErrorLabel = "";
-			}
-			return valid;
+			this.usernameErrorLabel = !validator.username(this.username)
+				? "User letters and digits 2 to 16 length"
+				: "";
+			this.emailErrorLabel = !validator.email(this.email)
+				? "Please enter a valid email address"
+				: "";
+			this.passwordErrorLabel = !validator.password(this.password)
+				? "Wrong password pattern. 8 chars length minimum"
+				: "";
+			this.passwordConfirmErrorLabel =
+				this.password != this.passwordConfirm ? "Passwords doesn't match" : "";
+			return (
+				this.usernameErrorLabel.length +
+					this.emailErrorLabel.length +
+					this.passwordErrorLabel.length +
+					this.passwordConfirmErrorLabel.length ==
+				0
+			);
 		},
 		async submitForm() {
 			if (this.formValidation()) {
@@ -127,5 +117,3 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss" scoped></style>

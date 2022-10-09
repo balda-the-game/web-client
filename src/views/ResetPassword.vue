@@ -41,6 +41,7 @@
 
 <script>
 import WTextInput from "@/components/Core/WTextInput.vue";
+import validator from "@/lib/validator.js";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
@@ -61,23 +62,16 @@ export default {
 	methods: {
 		...mapActions(["login", "update"]),
 		formValidation() {
-			let valid = true;
-			if (!/^[\d\w\S]{8,}$/g.test(this.password)) {
-				this.passwordErrorLabel = "Wrong pass pattern. 8 char length minimum";
-				valid = false;
-			} else {
-				this.passwordErrorLabel = "";
-			}
-			if (
-				this.password != this.passwordConfirm ||
-				this.passwordConfirm.length == 0
-			) {
-				this.passwordConfirmErrorLabel = "Passwords doesn't match";
-				valid = false;
-			} else {
-				this.passwordConfirmErrorLabel = "";
-			}
-			return valid;
+			this.passwordErrorLabel = !validator.password(this.password)
+				? "Wrong password pattern. 8 chars length minimum"
+				: "";
+			this.passwordConfirmErrorLabel =
+				this.password != this.passwordConfirm ? "Passwords doesn't match" : "";
+			return (
+				this.passwordErrorLabel.length +
+					this.passwordConfirmErrorLabel.length ==
+				0
+			);
 		},
 		async submitForm() {
 			if (this.formValidation()) {
