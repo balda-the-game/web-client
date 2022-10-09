@@ -19,7 +19,7 @@ const routes = [
 	{
 		path: "/reset-password",
 		name: "resetPassword",
-		component: () => import("../views/ResetPassword.vue"),
+		component: () => import("../views/ResetPasswordView.vue"),
 	},
 	{
 		path: "/rules",
@@ -39,12 +39,12 @@ const routes = [
 	{
 		path: "/profile",
 		name: "profile",
-		component: () => import("../views/Profile.vue"),
+		component: () => import("../views/ProfileView.vue"),
 	},
 	{
 		path: "/404",
 		name: "notFound",
-		component: () => import("../views/404.vue"),
+		component: () => import("../views/404View.vue"),
 	},
 	{
 		path: "/:catchAll(.*)",
