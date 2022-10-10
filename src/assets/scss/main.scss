@@ -33,3 +33,6 @@ $family-sans-serif: "Roboto Slab";
 }
 
 @import "../../../node_modules/bulma/bulma.sass"; // And then importing Bulma
+@import "bulma-plugins/bulma-badge.sass";
+@import "bulma-plugins/bulma-list.sass";
+@import "../../../node_modules/@creativebulma/bulma-tooltip/src/sass/index.sass";

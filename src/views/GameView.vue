@@ -4,7 +4,10 @@
 			<section class="columns">
 				<section class="column m-0 is-one-fifth">
 					<div class="box has-text-centered p-1 m-0 mb-2">{{ game.title }}</div>
-					<div class="leaderboard">
+					<div
+						class="leaderboard card list has-overflow-ellipsis"
+						:class="{ 'has-hidden-images': false }"
+					>
 						<LeaderBoardItem
 							v-for="p of players"
 							:key="p.name"
