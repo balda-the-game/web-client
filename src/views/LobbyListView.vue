@@ -1,7 +1,7 @@
 <template>
 	<CreateLobbyModal
 		:is-active="modalIsActive"
-		@confirm="createLobbySubmit"
+		@confirm="onConfirm"
 		@cancel="modalIsActive = false"
 	/>
 	<div class="lobbies box hero is-fullheight-with-navbar is-primary">
@@ -10,7 +10,7 @@
 				<LobbyListControls
 					class="box"
 					@create-lobby="modalIsActive = true"
-					@refresh-list="loadLobbies"
+					@refresh-list="updateLobbiesList"
 					@search="search"
 					@join-with-code="joinLobbyWithCode"
 				/>
@@ -22,12 +22,12 @@
 									<LobbyListEntry
 										v-for="lobby in lobbies"
 										:id="lobby.id"
-										:key="lobby.id"
+										:key="lobby.key"
 										:title="lobby.title"
-										:slots="lobby.slots"
-										:free-slots="lobby.free_slots"
+										:slots="lobby.max_players"
+										:free-slots="lobby.max_players"
 										:dimention="lobby.dimention"
-										:locked="lobby.locked"
+										:locked="lobby.key != ''"
 										:language="lobby.language"
 										@join="joinLobby"
 									/>
@@ -47,8 +47,9 @@
 import LobbyListControls from "@/components/LobbyListView/LobbyListControls.vue";
 import LobbyListEntry from "@/components/LobbyListView/LobbyListEntry.vue";
 import CreateLobbyModal from "@/components/LobbyListView/CreateLobbyModal.vue";
-import axios from "axios";
-import qs from "qs";
+import { createNamespacedHelpers } from "vuex";
+import { createLobby } from "@/lib/api/supabase";
+const { mapGetters, mapActions } = createNamespacedHelpers("lobbies");
 
 export default {
 	name: "LobbyListView",
@@ -56,61 +57,19 @@ export default {
 	data() {
 		return {
 			modalIsActive: false,
-			lobbies: [],
 		};
 	},
+	computed: {
+		...mapGetters(["lobbies"]),
+	},
 	mounted() {
-		this.loadLobbies();
+		this.updateLobbiesList();
 	},
 	methods: {
-		async loadLobbies() {
-			try {
-				const res = await axios({
-					method: "get",
-					url: "/lobbies",
-					headers: {
-						Authorization: `JWT ${this.$store.getters.token}`,
-					},
-				});
-				this.lobbies = res.data;
-			} catch (err) {
-				console.error(err.response.data);
-				this.lobbies = [];
-			}
-		},
-		async createLobbySubmit(lobby) {
+		...mapActions(["updateLobbiesList", "createLobby", "joinLobby"]),
+		async onConfirm(lobby) {
 			this.modalIsActive = false;
-			try {
-				const res = await axios({
-					method: "post",
-					url: "/lobbies",
-					headers: {
-						Authorization: `JWT ${this.$store.getters.token}`,
-					},
-					data: lobby,
-				});
-				this.$socket.emit("create_game", res.data);
-				if (res.data.id != null) this.joinLobby(res.data.id, lobby.key);
-			} catch (err) {
-				console.error(err.response.data);
-			}
-		},
-		async joinLobby(id, key) {
-			// FIXME: EMPTY REQ {} from forntend but not from postman when sending the key using body. Now it uses query pararm key
-			const qskey = qs.stringify({ key: key });
-			try {
-				const joinRes = await axios({
-					method: "get",
-					url: `/lobbies/${id}?${qskey}`,
-					headers: {
-						Authorization: `JWT ${this.$store.getters.token}`,
-					},
-				});
-				if (joinRes.data.msg == "Connected")
-					this.$router.push(`/lobbies/${id}`);
-			} catch (err) {
-				console.error(err.response);
-			}
+			await createLobby(lobby);
 		},
 		joinLobbyWithCode(code) {
 			console.log("join with code: ", code);

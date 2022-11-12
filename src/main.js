@@ -8,7 +8,15 @@ import store from "./store";
 import "@/assets/scss/main.scss";
 
 store.subscribe((mutation, state) => {
-	if (!["LOAD_STORE", "auth/SUCCESS", "auth/FAILURE"].includes(mutation.type)) {
+	if (
+		![
+			"LOAD_STORE",
+			"auth/SUCCESS",
+			"auth/FAILURE",
+			"lobbies/SUCCESS",
+			"lobbies/FAILURE",
+		].includes(mutation.type)
+	) {
 		store.commit("auth/SUCCESS");
 		localStorage.setItem("balda-state", JSON.stringify(state));
 	}

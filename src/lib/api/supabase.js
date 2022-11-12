@@ -37,7 +37,7 @@ export async function update(data) {
 }
 export async function sendResetPasswordEmail(email) {
 	const { error } = await supabase.auth.api.resetPasswordForEmail(email, {
-		redirectTo: `${import.meta.env.BASE_URL}/reset-password`,
+		redirectTo: `${import.meta.env.VITE_BASE_URL}/reset-password/`,
 	});
 	if (error) throw error;
 }
@@ -49,4 +49,40 @@ export async function getUserProfile(username) {
 
 	if (error) throw error;
 	return data[0];
+}
+// Lobbies
+export async function createLobby({
+	title,
+	key,
+	dimention,
+	language,
+	max_players,
+}) {
+	const { data, error } = await supabase.from("lobbies").insert([
+		{
+			title: title,
+			key: key,
+			dimention: dimention,
+			language: language,
+			max_players: max_players,
+		},
+	]);
+	if (error) throw error;
+	return data;
+}
+export async function getLobbies() {
+	const { data, error } = await supabase.from("lobbies").select("*");
+	if (error) throw error;
+	return data;
+}
+export async function joinLobby({ id, key }) {
+	const { data, error } = await supabase
+		.from("lobbies")
+		.update({
+			/* Call add_player function */
+		})
+		.eq("id", id)
+		.eq("key", key);
+	if (error) throw error;
+	return data;
 }

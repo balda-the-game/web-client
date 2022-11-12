@@ -25,7 +25,7 @@
 							value="45"
 							max="100"
 						></progress>
-						<GameField :dimention="game.dimention" :alphabet="game.alphabet" />
+						<GameField :dimention="game.dimention" />
 					</div>
 				</section>
 				<section class="column m-0 is-one-third">
@@ -75,9 +75,7 @@ export default {
 				},
 			],
 			game: {
-				// alphabet: "abcdefghijklmnopqrstuvwxyz",
-				alphabet: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
-				dimention: 5,
+				dimention: 7,
 				title: "Some boring title",
 				legend: {
 					Nagibator228: ["Snow", "Bomb", "Grave"],

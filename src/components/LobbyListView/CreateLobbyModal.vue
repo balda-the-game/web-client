@@ -67,7 +67,7 @@
 							<label class="label">Maximum players</label>
 							<div class="control has-icons-left">
 								<div class="select">
-									<select v-model.number="lobby.slots">
+									<select v-model.number="lobby.max_players">
 										<option value="2">2</option>
 										<option value="3">3</option>
 										<option value="4">4</option>
@@ -101,7 +101,7 @@ export default {
 			lobby: {
 				title: "New lobby",
 				key: "",
-				slots: 2,
+				max_players: 2,
 				dimention: 5,
 				language: "en_US",
 			},
@@ -112,7 +112,7 @@ export default {
 			this.lobby = {
 				title: "New lobby",
 				key: "",
-				slots: 2,
+				max_players: 2,
 				dimention: 5,
 				language: "en_US",
 			};

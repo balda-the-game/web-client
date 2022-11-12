@@ -1,5 +1,6 @@
 import { createStore, createLogger } from "vuex";
 import auth from "./modules/auth";
+import lobbies from "./modules/lobbies";
 import game from "./modules/game";
 
 const debug = import.meta.env.NODE_ENV !== "production";
@@ -13,6 +14,7 @@ export default createStore({
 	modules: {
 		auth: auth,
 		game: game,
+		lobbies: lobbies,
 	},
 	strict: debug,
 	plugins: debug ? [createLogger()] : [],
