@@ -31,10 +31,16 @@ const actions = {
 	login: async ({ commit }, payload) => {
 		try {
 			const user = await login(payload);
+
 			const { username, avatar_url } = await getUserProfile(
 				user.user_metadata.username
 			);
-			commit("LOGIN", { email: payload.email, username, avatar_url });
+			commit("LOGIN", {
+				id: user.id,
+				email: payload.email,
+				username,
+				avatar_url,
+			});
 			commit("SUCCESS");
 		} catch (e) {
 			console.error(e);

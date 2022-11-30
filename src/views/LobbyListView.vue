@@ -25,11 +25,20 @@
 										:key="lobby.key"
 										:title="lobby.title"
 										:slots="lobby.max_players"
-										:free-slots="lobby.max_players"
+										:free-slots="
+											lobby.players_list !== null
+												? lobby.max_players - lobby.players_list.length
+												: lobby.max_players
+										"
 										:dimention="lobby.dimention"
 										:locked="lobby.key != ''"
 										:language="lobby.language"
-										@join="joinLobby"
+										@join="
+											joinLobby({
+												userId: user.id,
+												...$event,
+											})
+										"
 									/>
 								</tbody>
 							</table>
@@ -49,7 +58,9 @@ import LobbyListEntry from "@/components/LobbyListView/LobbyListEntry.vue";
 import CreateLobbyModal from "@/components/LobbyListView/CreateLobbyModal.vue";
 import { createNamespacedHelpers } from "vuex";
 import { createLobby } from "@/lib/api/supabase";
-const { mapGetters, mapActions } = createNamespacedHelpers("lobbies");
+const { mapGetters: mapLobbiesGetters, mapActions: mapLobbiesActions } =
+	createNamespacedHelpers("lobbies");
+const { mapGetters: mapAuthGetters } = createNamespacedHelpers("auth");
 
 export default {
 	name: "LobbyListView",
@@ -60,13 +71,14 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["lobbies"]),
+		...mapLobbiesGetters(["lobbies"]),
+		...mapAuthGetters(["user"]),
 	},
 	mounted() {
 		this.updateLobbiesList();
 	},
 	methods: {
-		...mapActions(["updateLobbiesList", "createLobby", "joinLobby"]),
+		...mapLobbiesActions(["updateLobbiesList", "createLobby", "joinLobby"]),
 		async onConfirm(lobby) {
 			this.modalIsActive = false;
 			await createLobby(lobby);

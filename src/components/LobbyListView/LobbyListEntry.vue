@@ -99,7 +99,7 @@ export default {
 		join() {
 			console.log("Join lobby ", this.id);
 			console.log("with key ", this.key);
-			this.$emit("join", this.id, this.key);
+			this.$emit("join", { id: this.id, key: this.key });
 		},
 	},
 };

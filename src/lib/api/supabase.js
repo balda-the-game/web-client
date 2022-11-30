@@ -75,14 +75,32 @@ export async function getLobbies() {
 	if (error) throw error;
 	return data;
 }
-export async function joinLobby({ id, key }) {
-	const { data, error } = await supabase
+export async function joinLobby({ userId, id, key }) {
+	let { data, error } = await supabase
 		.from("lobbies")
-		.update({
-			/* Call add_player function */
-		})
+		.select("players_list")
 		.eq("id", id)
 		.eq("key", key);
+
+	if (data.length == 0) throw new Error("Wrong key or lobby");
 	if (error) throw error;
-	return data;
+
+	const players_list = data[0].players_list;
+	let newPlayersList = [];
+
+	if (players_list == null) newPlayersList = [userId];
+	else if (!players_list.includes(userId))
+		newPlayersList = [...players_list, userId];
+	else throw new Error("You're already in this lobby");
+
+	console.log(newPlayersList);
+	let { data: joinData, error: joinError } = await supabase
+		.from("lobbies")
+		.update({ players_list: newPlayersList })
+		.eq("id", id)
+		.eq("key", key);
+
+	if (joinData.length == 0) throw new Error("Couldn't connect to lobby");
+	if (joinError) throw error;
+	return joinData;
 }
